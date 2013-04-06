@@ -1,7 +1,7 @@
 package test
 
 import org.specs2.mutable._
-
+import app._
 import play.api.test._
 import play.api.test.Helpers._
 
