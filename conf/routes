@@ -8,3 +8,22 @@ GET     /                           controllers.Application.index
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
+#sent coordinates to Controller
+
+GET		/selectCell						controllers.Application.selectCell(row: Int ?= -1, col:Int ?= -1)
+
+#reset
+
+GET		/reset					controllers.Application.reset()
+
+#solve
+
+GET		/solve					controllers.Application.solve()
+
+#resize
+
+GET		/resize					controllers.Application.resize(size: Int ?= 0)
+
+#newTheme
+
+GET		/changeTheme					controllers.Application.changeTheme(new: String)

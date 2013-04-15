@@ -1,4 +1,4 @@
-@(content: Html)
+@(dimension:Int, currentTheme:util.Theme.Value)(content: Html)
 
 <!DOCTYPE html>
 
@@ -11,6 +11,54 @@
     </head>
     <body>
  @content
- 
+ <table id="field" >
+      <tbody>
+	  </tbody>
+  </table>
+  
+  <script type="text/javascript">
+      function createDynamicTable(tbody, row, column) {
+          if (tbody == null || tbody.length < 1) return;
+           for (var r = 0; r < row; r++) {
+          var trow = $("<tr>");
+               for (var c = 0; c < column; c++) {
+			   var number =r+c
+			     $('<td id="n">')
+                         .attr("row", r)
+						 .attr("col", c)
+                         .html('<button type="button"><img src="@routes.Assets.at("images/ControlPictures/question.png")"  width="30" height="30"></button>')
+                         .appendTo(trow);
+              }
+             trow.appendTo(tbody);
+         }
+     }   
+	 
+$("#n").click(function() {
+var row = $("#n").attr("row")
+var column = $("#n").attr("col")
+tryOpen(row,column)
+});
+	 
+	 function tryOpen(row, column){
+	$(document).ready(function(){
+	$.ajax({
+            type : 'GET',
+            url : '/selectCell?row='+row+ '&col='+ column,
+            //data : "row" + row + "col"+ column,
+            success : function(data) {
+                //setError('Call succedded');
+                //$('#test1').attr("src", data);
+				//.addClass("cell")
+				alert(data);
+				},
+            error : function(data) {
+                setError('Make call failed');
+				alert("We've got a big  problem, Houston");
+            }
+        });
+		});
+	 }
+createDynamicTable($("#field"), @dimension, @dimension);
+  </script>
    </body>
 </html>
