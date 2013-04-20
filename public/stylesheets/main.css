@@ -5,7 +5,10 @@ top:50px;
 border:0; 
    }
  .cell{
- border:1px solid #ffcc00;
+ 
+ background-image: url("/assets/images/ControlPictures/question.png");
+ width: 70px; 
+ height: 70px;
  }
    
 #controlpanel {

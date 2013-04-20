@@ -8,8 +8,21 @@ import util.Theme
 object Application extends Controller {
   import views._
   var feld: Feld = new Feld(4, Theme.fruits)
+  
   def index = Action {
-    Ok(views.html.index(4, Theme.fruits))
+    Ok(views.html.index(4, Theme.people))
+  }
+  
+   def redo (size: Int, theme : String) = Action {
+     var newTheme = Theme.people
+      theme match {
+      case "fruits" => newTheme = Theme.fruits
+      case "countries" => newTheme = Theme.countries
+      case "people" => newTheme = Theme.people
+      case "fashion" => newTheme = Theme.fashion
+
+    }
+    Ok(views.html.index(size, newTheme))
   }
 
   var statusText = "Spiel angefangen"
@@ -20,6 +33,7 @@ object Application extends Controller {
   }
 
   def changeTheme(stringTheme: String) = Action {
+    
     var newTheme :Theme.Value = Theme.fruits
     stringTheme match {
       case "fruits" => newTheme = Theme.fruits
@@ -33,7 +47,8 @@ object Application extends Controller {
       statusText = "Thema der Bilder geändert"
 
     } else { statusText = "Das aktuelle Thema ist schon das geforderte" }
-    Ok(statusText)
+    Ok("Theme (" + stringTheme +  ") was pressed")
+    
   }
 
   def selectCell(row: Int, col: Int) = Action {
@@ -65,13 +80,15 @@ object Application extends Controller {
       statusText = "Spielgrösse verändert"
 
     } else { statusText = "Das Spiel ist schon in der geforderten grösse" }
-    Ok(views.html.index(newSize, currentTheme))
+     Ok("Size (" + newSize +  ") was pressed")
   }
 
   def pictureNr(c: Coordinates): Int = {
     feld(c._1, c._2).pictureNr
   }
-
+  
+  
+  
   def fieldSize = feld.dimension
 
   def currentTheme = feld.currentTheme

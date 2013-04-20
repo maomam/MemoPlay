@@ -10,7 +10,11 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 #sent coordinates to Controller
 
-GET		/selectCell						controllers.Application.selectCell(row: Int ?= -1, col:Int ?= -1)
+GET		/selectCell/:row/:col			controllers.Application.selectCell(row : Int, col:Int)
+
+#redraw
+
+GET		/redo/:size/:theme			controllers.Application.redo(size : Int, theme: String)
 
 #reset
 
@@ -22,8 +26,8 @@ GET		/solve					controllers.Application.solve()
 
 #resize
 
-GET		/resize					controllers.Application.resize(size: Int ?= 0)
+GET		/resize/:size				controllers.Application.resize(size:Int)
 
 #newTheme
 
-GET		/changeTheme					controllers.Application.changeTheme(new: String)
+GET		/changeTheme/:stringTheme			controllers.Application.changeTheme(stringTheme:String)

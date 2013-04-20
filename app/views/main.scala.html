@@ -1,5 +1,8 @@
 @(dimension:Int, currentTheme:util.Theme.Value)(content: Html)
 
+@import controllers.Application
+@import helper._
+
 <!DOCTYPE html>
 
 <html>
@@ -13,6 +16,17 @@
  @content
  <table id="field" >
       <tbody>
+	  @for(row <- 0 until dimension) {
+          <tr>
+          	@for(column <- 0 until dimension) {
+			    <td "row" =row, "col" =column>
+			      @helper.form(routes.Application.selectCell(row, column)){
+                        <button class ="cell"> </button>
+						}
+			     </td>
+          	}
+          </tr>
+      	 }
 	  </tbody>
   </table>
   
@@ -24,9 +38,9 @@
                for (var c = 0; c < column; c++) {
 			   var number =r+c
 			     $('<td id="n">')
+				         .html('<button type="button"><img src="@routes.Assets.at("images/ControlPictures/question.png")"  width="30" height="30"></button>')
                          .attr("row", r)
 						 .attr("col", c)
-                         .html('<button type="button"><img src="@routes.Assets.at("images/ControlPictures/question.png")"  width="30" height="30"></button>')
                          .appendTo(trow);
               }
              trow.appendTo(tbody);
@@ -34,8 +48,6 @@
      }   
 	 
 $("#n").click(function() {
-var row = $("#n").attr("row")
-var column = $("#n").attr("col")
 tryOpen(row,column)
 });
 	 
@@ -58,7 +70,7 @@ tryOpen(row,column)
         });
 		});
 	 }
-createDynamicTable($("#field"), @dimension, @dimension);
+//createDynamicTable($("#field"), @dimension, @dimension);
   </script>
    </body>
 </html>

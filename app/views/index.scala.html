@@ -1,31 +1,51 @@
 @(dimension:Int, currentTheme:util.Theme.Value)
 
 @main(dimension, currentTheme){
-   '
+   
 <table id="controlpanel" >
 <tr>
-<td> <button type="button" onclick="@routes.Application.changeTheme("countries")">
- <img src="@routes.Assets.at("images/ControlPictures/countries.png")" width="60" height="60"> </button></td>
+<td> 
+@helper.form(routes.Application.changeTheme("countries")){
+<button><img src="@routes.Assets.at("images/ControlPictures/countries.png")" width="60" height="60"> </button>
+ }
+ </td>
 </tr>
 <tr>
-<td> <button type="button" onclick="@routes.Application.changeTheme("people")">
-<img src="@routes.Assets.at("images/ControlPictures/People.png")"  width="60" height="60"> </button></td>
+<td> 
+@helper.form(routes.Application.changeTheme("people")){
+<button ><img src="@routes.Assets.at("images/ControlPictures/People.png")"  width="60" height="60"> </button>
+}
+</td>
 </tr>
 <tr>
-<td><button type="button" onclick="@routes.Application.changeTheme("fruits")">
-<img src="@routes.Assets.at("images/ControlPictures/fruits.png")"  width="60" height="60"></button></td>
+<td>
+@helper.form(routes.Application.changeTheme("fruits")){
+<button><img src="@routes.Assets.at("images/ControlPictures/fruits.png")"  width="60" height="60"></button>
+}
+</td>
 </tr>
 <tr>
-<td><button type="button" onclick="@routes.Application.changeTheme("fashion")">
-<img src="@routes.Assets.at("images/ControlPictures/fashion.png")"  width="60" height="60"></button></td>
+<td>
+@helper.form(routes.Application.changeTheme("fashion")){
+<button><img src="@routes.Assets.at("images/ControlPictures/fashion.png")"  width="60" height="60"></button>
+}
+</td>
 </tr>
 </table> 
 
-<div id="size" ><br>
-<input type="radio" name="size" value="2" onclick="@routes.Application.resize(2)"> 2 
-<input type="radio" name="size" value="4" onclick="@routes.Application.resize(4)" checked> 4
-<input type="radio" name="size" value="6" onclick="@routes.Application.resize(6)"> 6 
-<input type="radio" name="size" value="8" onclick="@routes.Application.resize(8)"> 8
+<div id="size" >
+@helper.form(routes.Application.resize(2)){
+<button> 2</button>
+}
+@helper.form(routes.Application.resize(4)){
+<button> 4</button>
+}
+@helper.form(routes.Application.resize(6)){
+<button>6 </button>
+}
+@helper.form(routes.Application.resize(8)){
+<button> 8</button>
+}
 </div>
 
 <div id="gamecontrol" ><br>
