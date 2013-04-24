@@ -33,21 +33,32 @@
 </tr>
 </table> 
 
-<div id="size" >
+<table id="size" >
+<div >
+<tr>
+<td>
 @helper.form(routes.Application.resize(2)){
 <button> 2</button>
 }
+</td>
+<td>
 @helper.form(routes.Application.resize(4)){
 <button> 4</button>
 }
+</td>
+<td>
 @helper.form(routes.Application.resize(6)){
 <button>6 </button>
 }
+</td>
+<td>
 @helper.form(routes.Application.resize(8)){
 <button> 8</button>
 }
+</td>
+</tr>
 </div>
-
+</table> 
 <div id="gamecontrol" ><br>
 <button type="button" onclick="@routes.Application.reset">Spiel zurücksetzen </button>
 <button type="button" onclick="@routes.Application.solve"> Spiel lösen</button>
