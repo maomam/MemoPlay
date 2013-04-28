@@ -1,8 +1,8 @@
-@(dimension:Int, currentTheme:String)(pictureBindings: String)
+@(dimension:Int, currentTheme:String)
 
-@main(dimension, currentTheme)(pictureBindings){
-
-<table id="themecontrol" >
+@main(dimension, currentTheme){
+   
+<table id="controlpanel" >
 <tr>
 <td> 
 @helper.form(routes.Application.showField("countries", dimension)){
@@ -59,7 +59,14 @@
 </tr>
 </div>
 </table> 
-
+<div id="gamecontrol" ><br>
+@helper.form(routes.Application.reset){
+<button> Spiel zurücksetzen</button>
+}
+@helper.form(routes.Application.solve){
+<button> Spiel lösen</button>
+}
+</div>
 
 }
 

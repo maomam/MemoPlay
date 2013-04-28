@@ -1,27 +1,25 @@
 #field {
-position:absolute;
+position:relative;
 left:300px;
-top:50px;
 border:0; 
+
    }
- .cell{
- 
+ .cellclosed{
  background-image: url("/assets/images/ControlPictures/question.png");
- width: 70px; 
- height: 70px;
+ width: 75px; 
+ height: 75px;
  }
    
-#controlpanel {
+#themecontrol {
 position:absolute;
 left:20px;
-top:50px;
 border:0; 
    }
    
 #size {
 position:absolute;
 left:20px;
-top:370px;
+top: 320px;
 align:left;
    }
    
@@ -30,8 +28,7 @@ background-color:green;
 }
 
 #gamecontrol{
-position:absolute;
-left:300px;
-top:350px;
+ position:relative;
+ left: 300px;
 
    }
