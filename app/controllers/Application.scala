@@ -4,6 +4,7 @@ import play.api._
 import play.api.mvc._
 import model._
 import util.Theme
+import play.api.libs.json.Json
 
 object Application extends Controller {
   import views._
@@ -72,13 +73,21 @@ object Application extends Controller {
   }
 
   //TODO: make this lazy, not to recalculate it every time showField is called
-  def pictureBindingsJSON: String = {
+  def pictureBindingsJSON: JsObject = {
     val dimension = fieldSize
-    var result = "pictureBinding: {\n"
-    for (i <- 0 to dimension - 1; 
-      j <- 0 to dimension - 1) result += "  'c" + i + "," + j + "': " +  pictureNr((i,j)) + "\n"
-    result += "}\n"
-    result
+    var folder = currentTheme.toString()
+    var result = Json.obj(
+  "pictureBinding" -> Json.arr(
+      for (i <- 0 to dimension - 1; 
+      j <- 0 to dimension - 1){
+    Json.obj(
+      "id" -> "  'c" + i + "," + j ,
+      "url" -> "/assets/images/"+ folder + "/"+ pictureNr(i,j)+ ".jpg"
+    ),
+    
+  )
+)}
+  result
   }
   
  

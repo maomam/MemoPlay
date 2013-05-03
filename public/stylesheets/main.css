@@ -9,6 +9,11 @@ border:0;
  width: 75px; 
  height: 75px;
  }
+ .cellguessed{
+ background-color: white;
+ width: 75px; 
+ height: 75px;
+ }
    
 #themecontrol {
 position:absolute;

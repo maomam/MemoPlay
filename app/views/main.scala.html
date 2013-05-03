@@ -1,4 +1,4 @@
-@(dimension:Int, currentTheme:String)(pictureBindings: String)(content: Html)
+@(dimension:Int, currentTheme:String)(pictureBindings: JsObject)(content: Html)
 
 @import controllers.Application
 @import helper._
@@ -50,7 +50,21 @@
 	  $(document).ready(function(){
 	alert(RP.pictureBindings.'c0,0');
 	});
-	  
+	
+	function openCell(row: Int, col :Int){
+	$('#c', row, col).removeClass(cellclosed);
+	$('#c', row, col).css("background-image", RP.pictureBindings.'c', row. col );
+	};	
+
+	function guessedCell (row: Int, col :Int){
+	$('#c', row, col).removeClass(cellclosed);
+	$('#c', row, col).addClass(cellguessed);
+	};
+	
+	function closeCell(row: Int, col :Int){
+	$('#c', row, col).addClass(cellclosed);
+	};
+
 	  
   </script>
    </body>
