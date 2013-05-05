@@ -1,4 +1,4 @@
-@(dimension:Int, currentTheme:String)(pictureBindings: JsObject)(content: Html)
+@(dimension:Int, currentTheme:String)(pictureBindingsJSON: String)(content: Html)
 
 @import controllers.Application
 @import helper._
@@ -44,25 +44,22 @@
 </table>
 </div>
   <script type="text/javascript">
-      RP = {
-		@pictureBindings
-	  }
-	  $(document).ready(function(){
-	alert(RP.pictureBindings.'c0,0');
-	});
-	
-	function openCell(row: Int, col :Int){
-	$('#c', row, col).removeClass(cellclosed);
-	$('#c', row, col).css("background-image", RP.pictureBindings.'c', row. col );
+    var RP = {
+		pictureBindings: JSON.parse('@Html(pictureBindingsJSON)')
+	};
+	  
+	function openCell(row, col){
+	  $('#c', row, col).removeClass(cellclosed);
+	  $('#c', row, col).css("background-image", RP.pictureBindings[row][col].url );
 	};	
 
-	function guessedCell (row: Int, col :Int){
-	$('#c', row, col).removeClass(cellclosed);
-	$('#c', row, col).addClass(cellguessed);
+	function guessedCell (row, col){
+	  $('#c', row, col).removeClass(cellclosed);
+	  $('#c', row, col).addClass(cellguessed);
 	};
 	
-	function closeCell(row: Int, col :Int){
-	$('#c', row, col).addClass(cellclosed);
+	function closeCell(row, col){
+	  $('#c', row, col).addClass(cellclosed);
 	};
 
 	  

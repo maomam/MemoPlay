@@ -44,9 +44,25 @@ object Application extends Controller {
   }
 
   def selectCell(row: Int, col: Int) = Action {
-    Ok("Button with coordinates (" + row + "," + col + ") was pressed")
-    /*request =>
-   Ok("Got request [" + request + "]")
+    val chgCells = feld.tryOpen(cellCoords._1, cellCoords._2) 
+   
+    chgCells.closedCells.map(x => """<script>closeCell(" + x._1 + ", " + x._2 + ")</script>""") 
+    if(!chgCells.guessedCells.isEmpty) 
+    chgCells.openedCell match {
+      case Some(coords) => Action{}
+      case None => 
+    }
+    if(feld.gameOver) { statusText ="Spiel ist beendet"
+    }
+    val events = Enumerator(
+     """<script>console.log('kiki')</script>""",
+     """<script>console.log('foo')</script>""",
+     """<script>console.log('bar')</script>"""
+    )
+    Ok.stream(events >>> Enumerator.eof).as(HTML)
+    
+    /*
+  
    val chgCells = feld.tryOpen(cellCoords._1, cellCoords._2) 
    
    if(!chgCells.closedCells.isEmpty) 
@@ -73,21 +89,18 @@ object Application extends Controller {
   }
 
   //TODO: make this lazy, not to recalculate it every time showField is called
-  def pictureBindingsJSON: JsObject = {
+  def pictureBindingsJSON: String = {
     val dimension = fieldSize
     var folder = currentTheme.toString()
-    var result = Json.obj(
-  "pictureBinding" -> Json.arr(
-      for (i <- 0 to dimension - 1; 
-      j <- 0 to dimension - 1){
-    Json.obj(
-      "id" -> "  'c" + i + "," + j ,
-      "url" -> "/assets/images/"+ folder + "/"+ pictureNr(i,j)+ ".jpg"
-    ),
-    
-  )
-)}
-  result
+    var result = Json.toJson(
+        for (i <- 0 to dimension - 1; 
+    	       j <- 0 to dimension - 1) yield 
+            Json.obj(
+                "id" -> ("c" + i + "," + j),
+                "url" -> ("/assets/images/"+ folder + "/"+ pictureNr(i,j) + ".jpg")
+            )
+    )
+    Json.stringify(result)
   }
   
  
