@@ -44,10 +44,12 @@ object Application extends Controller {
   }
 
   def selectCell(row: Int, col: Int) = Action {
-    val chgCells = feld.tryOpen(cellCoords._1, cellCoords._2) 
-   
-    chgCells.closedCells.map(x => """<script>closeCell(" + x._1 + ", " + x._2 + ")</script>""") 
-    if(!chgCells.guessedCells.isEmpty) 
+    val chgCells = feld.tryOpen(row, col) 
+    val response = Json.toJson(chgCells)
+    Ok(Json.stringify(response))
+    //chgCells.closedCells.map(x => """<script>closeCell(" + x._1 + ", " + x._2 + ")</script>""") 
+    
+    /*if(!chgCells.guessedCells.isEmpty) 
     chgCells.openedCell match {
       case Some(coords) => Action{}
       case None => 
@@ -60,7 +62,7 @@ object Application extends Controller {
      """<script>console.log('bar')</script>"""
     )
     Ok.stream(events >>> Enumerator.eof).as(HTML)
-    
+    */
     /*
   
    val chgCells = feld.tryOpen(cellCoords._1, cellCoords._2) 
@@ -73,6 +75,7 @@ object Application extends Controller {
    }
    if(feld.gameOver) { statusText ="Spiel ist beendet"
      }*/
+    
   }
 
   def reset = Action {

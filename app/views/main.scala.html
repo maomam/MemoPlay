@@ -21,9 +21,9 @@
           <tr>
           	@for(column <- 0 until dimension) {
 			    <td "row" =row, "col" =column>
-			      @helper.form(routes.Application.selectCell(row, column)){
-                        <button class ="cellclosed" id='c@row,@column'> </button>
-						}
+			     
+                        <button class="cellclosed" id='c@row,@column' onclick="clickCell(@row,@column)"> </button>
+						
 			     </td>
           	}
           </tr>
@@ -49,19 +49,40 @@
 	};
 	  
 	function openCell(row, col){
-	  $('#c', row, col).removeClass(cellclosed);
-	  $('#c', row, col).css("background-image", RP.pictureBindings[row][col].url );
+	  $('#c' + row + ',' + col).removeClass('cellclosed').css("background-image", 'url(' + RP.pictureBindings[row*@dimension + col].url + ')');
+	  console.log($('#c' + row + ',' + col));
 	};	
 
-	function guessedCell (row, col){
-	  $('#c', row, col).removeClass(cellclosed);
-	  $('#c', row, col).addClass(cellguessed);
+	function hideCell (row, col){
+	  $('#c' + row + ',' + col).removeClass('cellclosed').addClass('cellguessed');
 	};
 	
 	function closeCell(row, col){
-	  $('#c', row, col).addClass(cellclosed);
+	  $('#c' + row + ',' + col).addClass('cellclosed');
 	};
-
+	
+	function clickCell(row,col){
+		$.ajax({
+            type : 'GET',
+            url : "/selectCell/" + row + "/" + col,
+            success : function(data) {
+                var chgCells = JSON.parse(data)
+				var occ = chgCells.openedCell
+				$.each(chgCells.closedCells,function(i, coords) {
+					closeCell(coords.row, coords.column)
+				});
+				$.each(chgCells.guessedCells,function(i, coords) {
+					hideCell(coords.row, coords.column)
+				});
+				if(occ != null)
+					openCell(occ.row, occ.column)
+			},
+            error : function(data) {
+                setError('Make call failed');
+				alert("We've had a problem, Houston");
+            }
+        });
+	}
 	  
   </script>
    </body>
