@@ -3,16 +3,14 @@ position:relative;
 left:300px;
 border:0; 
 
-   }
- .cellclosed{
- background-image: url("/assets/images/ControlPictures/question.png");
- width: 75px; 
- height: 75px;
- }
+}
+.fieldcell{
+  width: 75px; 
+  height: 75px;
+}
+
  .cellguessed{
  background-color: white;
- width: 75px; 
- height: 75px;
  }
  .themebutton{
  width: 60px; 

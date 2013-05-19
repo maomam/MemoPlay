@@ -47,34 +47,7 @@ object Application extends Controller {
     val chgCells = feld.tryOpen(row, col) 
     val response = Json.toJson(chgCells)
     Ok(Json.stringify(response))
-    //chgCells.closedCells.map(x => """<script>closeCell(" + x._1 + ", " + x._2 + ")</script>""") 
-    
-    /*if(!chgCells.guessedCells.isEmpty) 
-    chgCells.openedCell match {
-      case Some(coords) => Action{}
-      case None => 
-    }
-    if(feld.gameOver) { statusText ="Spiel ist beendet"
-    }
-    val events = Enumerator(
-     """<script>console.log('kiki')</script>""",
-     """<script>console.log('foo')</script>""",
-     """<script>console.log('bar')</script>"""
-    )
-    Ok.stream(events >>> Enumerator.eof).as(HTML)
-    */
-    /*
-  
-   val chgCells = feld.tryOpen(cellCoords._1, cellCoords._2) 
    
-   if(!chgCells.closedCells.isEmpty) 
-   if(!chgCells.guessedCells.isEmpty) 
-   chgCells.openedCell match {
-     case Some(coords) => Action{}
-     case None => 
-   }
-   if(feld.gameOver) { statusText ="Spiel ist beendet"
-     }*/
     
   }
 
@@ -99,7 +72,7 @@ object Application extends Controller {
         for (i <- 0 to dimension - 1; 
     	       j <- 0 to dimension - 1) yield 
             Json.obj(
-                "id" -> ("c" + i + "," + j),
+                "id" -> ("c" + i + "-" + j),
                 "url" -> ("/assets/images/"+ folder + "/"+ pictureNr(i,j) + ".jpg")
             )
     )

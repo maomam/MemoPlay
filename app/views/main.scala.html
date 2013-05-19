@@ -22,7 +22,7 @@
           	@for(column <- 0 until dimension) {
 			    <td "row" =row, "col" =column>
 			     
-                        <button class="cellclosed" id='c@row,@column' onclick="clickCell(@row,@column)"> </button>
+                        <button class="fieldcell" id='c@row-@column' onclick="clickCell(@row,@column)"> </button>
 						
 			     </td>
           	}
@@ -47,18 +47,22 @@
     var RP = {
 		pictureBindings: JSON.parse('@Html(pictureBindingsJSON)')
 	};
+	
+	$(document).ready(function() {
+        $('.fieldcell').css("background-image", 'url('/assets/images/ControlPictures/question.png')');
+});
 	  
 	function openCell(row, col){
-	  $('#c' + row + ',' + col).removeClass('cellclosed').css("background-image", 'url(' + RP.pictureBindings[row*@dimension + col].url + ')');
-	  console.log($('#c' + row + ',' + col));
+	  $('#c' + row + '-' + col).css("background-image", 'url(' + RP.pictureBindings[row*@dimension + col].url + ')');
 	};	
 
 	function hideCell (row, col){
-	  $('#c' + row + ',' + col).removeClass('cellclosed').addClass('cellguessed');
+	  $('#c' + row + '-' + col).addClass('cellguessed');
 	};
 	
 	function closeCell(row, col){
-	  $('#c' + row + ',' + col).addClass('cellclosed');
+		console.log($('#c' + row + '-' + col))
+	  $('#c' + row + '-' + col).css("background-image", 'url('/assets/images/ControlPictures/question.png')');
 	};
 	
 	function clickCell(row,col){
