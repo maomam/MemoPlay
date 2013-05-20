@@ -47,22 +47,39 @@
     var RP = {
 		pictureBindings: JSON.parse('@Html(pictureBindingsJSON)')
 	};
+	var question = "/assets/images/ControlPictures/question.png";
 	
 	$(document).ready(function() {
-        $('.fieldcell').css("background-image", 'url('/assets/images/ControlPictures/question.png')');
-});
+        closeAllCells();
+	});
+
+	function closeAllCells(){
+	$('.fieldcell').css("background-image", 'url(' + question+ ')');
+	};
+/*
+	function openAllCells(){
+	$('.fieldcell').each(function() {
+	var currentId= this.id;
+	$(data.RP.pictureBindings).each(function(index,element){
+    if(element.id == currentId){
+	this.css("background-image", 'url(' + element.url + ')');
+	}
+	})	;
+    )};
+	};*/
 	  
 	function openCell(row, col){
 	  $('#c' + row + '-' + col).css("background-image", 'url(' + RP.pictureBindings[row*@dimension + col].url + ')');
 	};	
 
 	function hideCell (row, col){
-	  $('#c' + row + '-' + col).addClass('cellguessed');
+	  $('#c' + row + '-' + col).css({'background-image': 'none',
+									'background-color': 'white'});
 	};
 	
 	function closeCell(row, col){
 		console.log($('#c' + row + '-' + col))
-	  $('#c' + row + '-' + col).css("background-image", 'url('/assets/images/ControlPictures/question.png')');
+	  $('#c' + row + '-' + col).css("background-image", 'url('+question+')');
 	};
 	
 	function clickCell(row,col){
