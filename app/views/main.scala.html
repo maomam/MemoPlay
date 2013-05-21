@@ -56,17 +56,14 @@
 	function closeAllCells(){
 	$('.fieldcell').css("background-image", 'url(' + question+ ')');
 	};
-/*
+
 	function openAllCells(){
-	$('.fieldcell').each(function() {
-	var currentId= this.id;
-	$(data.RP.pictureBindings).each(function(index,element){
-    if(element.id == currentId){
-	this.css("background-image", 'url(' + element.url + ')');
+	for (var i =0; i< @dimension -1; i++){
+		for (var j=0; j< @dimension-1; j++){
+			openCell(i, j);
+		}
 	}
-	})	;
-    )};
-	};*/
+	};
 	  
 	function openCell(row, col){
 	  $('#c' + row + '-' + col).css("background-image", 'url(' + RP.pictureBindings[row*@dimension + col].url + ')');
