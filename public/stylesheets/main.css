@@ -16,19 +16,25 @@ border:0;
  width: 60px; 
  height: 60px;
  }
-   
+   .instruction{
+text-align:left;
+font-style:italic;
+font-family:verdana;
+font-size: small; 
+   }
 #themecontrol {
 position:absolute;
 left:20px;
+top: -12px;
 border:0; 
    }
    
-#size {
+#sizecontrol {
 position:absolute;
 left:20px;
-top: 320px;
-align:left;
+top: 350px;
    }
+
    
 body{
 background-color:green;

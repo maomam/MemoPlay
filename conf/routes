@@ -22,4 +22,4 @@ GET		/reset					controllers.Application.reset()
 
 GET		/solve					controllers.Application.solve()
 
-GET     /:stringTheme/:size				controllers.Application.showField(stringTheme: String, size: Int)
+GET     /:stringTheme/:size/			controllers.Application.showField(stringTheme: String, size: Int)

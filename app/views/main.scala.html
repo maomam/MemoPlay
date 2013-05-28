@@ -20,7 +20,7 @@
 	  @for(row <- 0 until dimension) {
           <tr>
           	@for(column <- 0 until dimension) {
-			    <td "row" =row, "col" =column>
+			    <td>
 			     
                         <button class="fieldcell" id='c@row-@column' onclick="clickCell(@row,@column)"> </button>
 						
@@ -37,12 +37,13 @@
 @helper.form(routes.Application.reset){
 <button> Spiel zurücksetzen</button>
 }
-@helper.form(routes.Application.solve){
-<button> Spiel lösen</button>
-}
+
+<button onclick= "solveGame()"> Spiel lösen</button>
+
 </tr>
 </table>
 </div>
+
   <script type="text/javascript">
     var RP = {
 		pictureBindings: JSON.parse('@Html(pictureBindingsJSON)')
@@ -58,8 +59,8 @@
 	};
 
 	function openAllCells(){
-	for (var i =0; i< @dimension -1; i++){
-		for (var j=0; j< @dimension-1; j++){
+	for (var i =0; i < @dimension; i++){
+		for (var j=0; j < @dimension; j++){
 			openCell(i, j);
 		}
 	}
@@ -70,12 +71,11 @@
 	};	
 
 	function hideCell (row, col){
-	  $('#c' + row + '-' + col).css({'background-image': 'none',
-									'background-color': 'white'});
+	  $('#c' + row + '-' + col).css({'background-image': 'none',});
+									
 	};
 	
 	function closeCell(row, col){
-		console.log($('#c' + row + '-' + col))
 	  $('#c' + row + '-' + col).css("background-image", 'url('+question+')');
 	};
 	
@@ -84,16 +84,21 @@
             type : 'GET',
             url : "/selectCell/" + row + "/" + col,
             success : function(data) {
-                var chgCells = JSON.parse(data)
+                var response = JSON.parse(data)
+				var chgCells = response.changedCells
 				var occ = chgCells.openedCell
 				$.each(chgCells.closedCells,function(i, coords) {
 					closeCell(coords.row, coords.column)
 				});
+				if(occ != null)
+					openCell(occ.row, occ.column)
 				$.each(chgCells.guessedCells,function(i, coords) {
 					hideCell(coords.row, coords.column)
 				});
-				if(occ != null)
-					openCell(occ.row, occ.column)
+				if (response.isGameOver){
+				    openAllCells();
+					alert("Spiel gelöst. Danke für das Spiel.");
+				};
 			},
             error : function(data) {
                 setError('Make call failed');
@@ -101,6 +106,26 @@
             }
         });
 	}
+	
+	function solveGame(){
+	$.ajax({
+            type : 'GET',
+            url : "/solve",
+            success : function(data) {
+                var response = JSON.parse(data)
+				if (response.res){
+				openAllCells();
+				alert(response.statusText);
+				};
+							},
+            error : function(data) {
+                setError('Make call failed');
+				alert("Problem solving the game");
+            }
+        });
+	}
+	
+	
 	  
   </script>
    </body>

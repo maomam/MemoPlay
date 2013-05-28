@@ -9,16 +9,13 @@ import play.api.libs.json.Json
 object Application extends Controller {
   import views._
   var feld: Feld = new Feld(4, Theme.fruits)
-  
+   var statusText ="a"
   def index = Action {
     Redirect(routes.Application.showField("fruits",4))
   }
   
+
  
-
-  var statusText = "Spiel angefangen"
-
-  
 
   def showField(stringTheme: String, newSize: Int) = Action {
     var newTheme :Theme.Value = Theme.fruits
@@ -29,23 +26,31 @@ object Application extends Controller {
       case "fashion" => newTheme = Theme.fashion
       case _ => newTheme = currentTheme
     }
-    if (feld.currentTheme != newTheme) {
+    
+    if(feld.currentTheme == newTheme & newSize == feld.dimension){
+       statusText = "Zellen werden zurueckgesetzt"
+    }
+    if (feld.currentTheme != newTheme & newSize == feld.dimension) {
       feld.setTheme(newTheme)
       statusText = "Thema der Bilder geändert"
     } else { statusText = "Das aktuelle Thema ist schon das geforderte" }
    
-    if (newSize != feld.dimension) {
+    if (newSize != feld.dimension & feld.currentTheme == newTheme) {
       feld.resize(newSize)
       statusText = "Spielgrösse verändert"
 
     } else { statusText = "Das Spiel ist schon in der geforderten grösse" }
-    Ok(views.html.index(newSize, stringTheme)(pictureBindingsJSON))
+    
+    Ok(views.html.index(newSize,stringTheme,statusText)(pictureBindingsJSON))
     
   }
 
   def selectCell(row: Int, col: Int) = Action {
     val chgCells = feld.tryOpen(row, col) 
-    val response = Json.toJson(chgCells)
+    val response = Json.obj(
+        "changedCells" -> Json.toJson(chgCells),
+        "isGameOver" -> feld.gameOver
+    )
     Ok(Json.stringify(response))
    
     
@@ -53,15 +58,18 @@ object Application extends Controller {
 
   def reset = Action {
     feld.reset
-    statusText = "Zellen werden zurueckgesetzt"
-    Redirect(routes.Application.showField(currentTheme.toString(), fieldSize))
+   Redirect(routes.Application.showField(currentTheme.toString(), fieldSize))
   }
   
   def solve = Action {
-    feld.solve;
-    statusText = "Spiel geloest";
-    //pictures
-    Ok(statusText)
+    feld.solve
+    var statusText = "Spiel geloest"
+    val respo = Json.obj(
+        "res" -> feld.gameOver,
+        "statusText" -> statusText
+        
+        )
+    Ok(Json.stringify(respo))
   }
 
   //TODO: make this lazy, not to recalculate it every time showField is called

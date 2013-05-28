@@ -1,43 +1,43 @@
 
-@(dimension:Int, currentTheme:String)(pictureBindings: String)
+@(dimension:Int, currentTheme:String, message :String)(pictureBindings: String)
 
 @main(dimension, currentTheme)(pictureBindings){
-
-<table id="themecontrol" >
+<div id="themecontrol">
+<p class="instruction">Bitte das Thema wählen</p>
+<table>
 <tr>
 <td> 
 @helper.form(routes.Application.showField("countries", dimension)){
-<button><img class ="themebutton"src="@routes.Assets.at("images/ControlPictures/countries.png")"> </button>
+<button><img class ="themebutton" src="/assets/images/ControlPictures/countries.png"></button>
  }
  </td>
 </tr>
 <tr>
 <td> 
 @helper.form(routes.Application.showField("people", dimension)){
-<button><img class ="themebutton"src="@routes.Assets.at("images/ControlPictures/People.png")"  > </button>
+<button><img class ="themebutton" src="/assets/images/ControlPictures/People.png"></button>
 }
 </td>
 </tr>
 <tr>
 <td>
 @helper.form(routes.Application.showField("fruits", dimension)){
-<button><img class ="themebutton"src="@routes.Assets.at("images/ControlPictures/fruits.png")"></button>
+<button><img class ="themebutton"src="/assets/images/ControlPictures/fruits.png"></button>
 }
 </td>
 </tr>
 <tr>
 <td>
 @helper.form(routes.Application.showField("fashion", dimension)){
-<button ><img class ="themebutton" src="@routes.Assets.at("images/ControlPictures/fashion.png")" ></button>
+<button ><img class ="themebutton" src="/assets/images/ControlPictures/fashion.png"></button>
 }
 </td>
 </tr>
 </table> 
+</div>
 
-<table id="size" >
-<div >
-<tr>
-<td>
+<div id="sizecontrol">
+<p class="instruction"> Bitte die Spielfeldrösse wählen</p><table><tr><td>
 @helper.form(routes.Application.showField(currentTheme,2)){
 <button> 2</button>
 }
@@ -58,9 +58,11 @@
 }
 </td>
 </tr>
-</div>
+
 </table> 
-
-
+</div>
+<script type="text/javascript">
+ alert(message);
+</script>
 }
 
