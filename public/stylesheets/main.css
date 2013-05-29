@@ -1,6 +1,6 @@
 #field {
 position:relative;
-left:300px;
+left:350px;
 border:0; 
 
 }
@@ -28,7 +28,11 @@ left:20px;
 top: -12px;
 border:0; 
    }
-   
+   #message{
+   position:absolute;
+left:20px;
+top: 420px;
+   }
 #sizecontrol {
 position:absolute;
 left:20px;
@@ -42,6 +46,6 @@ background-color:green;
 
 #gamecontrol{
  position:relative;
- left: 300px;
+ left: 350px;
 
    }
