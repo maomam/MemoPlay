@@ -9,7 +9,7 @@ import play.api.libs.json.Json
 object Application extends Controller {
   import views._
   var feld: Feld = new Feld(4, Theme.fruits)
-   var statusText ="a"
+   var statusText ="Spiel angefangen"
   def index = Action {
     Redirect(routes.Application.showField("fruits",4))
   }
@@ -27,23 +27,20 @@ object Application extends Controller {
       case _ => newTheme = currentTheme
     }
     
-    if(feld.currentTheme == newTheme & newSize == feld.dimension){
+    if(newTheme == feld.currentTheme & newSize == feld.dimension){
        statusText = "Zellen werden zurueckgesetzt"
     }
-    if (feld.currentTheme != newTheme & newSize == feld.dimension) {
+    if ( newTheme != feld.currentTheme  & newSize == feld.dimension) {
       feld.setTheme(newTheme)
       statusText = "Thema der Bilder geändert"
-    } else { statusText = "Das aktuelle Thema ist schon das geforderte" }
+    } 
    
-    if (newSize != feld.dimension & feld.currentTheme == newTheme) {
+    if (newSize != feld.dimension &  newTheme == feld.currentTheme) {
       feld.resize(newSize)
       statusText = "Spielgrösse verändert"
-
-    } else { statusText = "Das Spiel ist schon in der geforderten grösse" }
-    
+    } 
     Ok(views.html.index(newSize,stringTheme,statusText)(pictureBindingsJSON))
-    
-  }
+    }
 
   def selectCell(row: Int, col: Int) = Action {
     val chgCells = feld.tryOpen(row, col) 
@@ -57,7 +54,7 @@ object Application extends Controller {
   }
 
   def reset = Action {
-    feld.reset
+   feld.reset
    Redirect(routes.Application.showField(currentTheme.toString(), fieldSize))
   }
   
