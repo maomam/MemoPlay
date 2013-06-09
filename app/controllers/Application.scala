@@ -4,10 +4,37 @@ import play.api._
 import play.api.mvc._
 import model._
 import util.Theme
-import play.api.libs.json.Json
+import play.api.libs.json._
+
+object utils {
+  implicit val coordsWrites = new Writes[Coordinates] {
+    def writes(c: Coordinates): JsValue = {
+      Json.obj(
+        "row" -> c._1,
+        "column" -> c._2
+      )
+    }
+  }
+  
+  implicit val changedCellsWrites = new Writes[ChangedCells] {
+    def writes(c: ChangedCells): JsValue = {
+      val openedCell = c.openedCell match {
+          case Some(coords) => Json.toJson(coords)
+          case None => JsNull
+      }
+      Json.obj(
+        "closedCells" -> c.closedCells,
+        "guessedCells" -> c.guessedCells,
+        "openedCell" -> openedCell 
+      )
+    }
+  }
+}
 
 object Application extends Controller {
   import views._
+  import utils._
+  
   var feld: Feld = new Feld(4, Theme.fruits)
    var statusText ="Spiel angefangen"
   def index = Action {

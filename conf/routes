@@ -12,8 +12,6 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 GET		/selectCell/:row/:col			controllers.Application.selectCell(row : Int, col:Int)
 
-
-
 #reset
 
 GET		/reset					controllers.Application.reset()
@@ -22,4 +20,5 @@ GET		/reset					controllers.Application.reset()
 
 GET		/solve					controllers.Application.solve()
 
+#changesomething
 GET     /:stringTheme/:size/			controllers.Application.showField(stringTheme: String, size: Int)
