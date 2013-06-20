@@ -8,7 +8,7 @@ object ApplicationBuild extends Build {
   val appVersion      = "1.0"
 
   val appDependencies = Seq(
-    // Add your project dependencies here,
+    "org.scala-lang" % "scala-swing" % "2.10.0"
   )
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
